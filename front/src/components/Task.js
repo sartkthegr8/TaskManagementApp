@@ -15,7 +15,7 @@ const Task = ({ task }) => {
   };
 
   return (
-    <div className="p-4 border rounded mb-4">
+    <div className= "p-4 border rounded mb-4">
       <h3 className="text-xl font-bold">{task.title}</h3>
       <p className="text-gray-700">{task.description}</p>
       <p className="text-gray-600">Due Date: {new Date(task.dueDate).toLocaleDateString()}</p>
