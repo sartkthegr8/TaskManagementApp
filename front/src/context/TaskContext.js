@@ -1,20 +1,18 @@
-// src/context/TaskContext.js
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useReducer, useContext } from 'react';
 
-// Define initial state
+const TaskContext = createContext();
+
 const initialState = {
-  tasks: [],
+  tasks: []
 };
 
-// Define actions
 const TaskActions = {
   SET_TASKS: 'SET_TASKS',
   ADD_TASK: 'ADD_TASK',
   UPDATE_TASK: 'UPDATE_TASK',
-  DELETE_TASK: 'DELETE_TASK',
+  DELETE_TASK: 'DELETE_TASK'
 };
 
-// Reducer function to update state based on actions
 const taskReducer = (state, action) => {
   switch (action.type) {
     case TaskActions.SET_TASKS:
@@ -24,19 +22,20 @@ const taskReducer = (state, action) => {
     case TaskActions.UPDATE_TASK:
       return {
         ...state,
-        tasks: state.tasks.map(task => (task._id === action.payload._id ? action.payload : task)),
+        tasks: state.tasks.map(task =>
+          task._id === action.payload._id ? action.payload : task
+        )
       };
     case TaskActions.DELETE_TASK:
-      return { ...state, tasks: state.tasks.filter(task => task._id !== action.payload) };
+      return {
+        ...state,
+        tasks: state.tasks.filter(task => task._id !== action.payload)
+      };
     default:
       return state;
   }
 };
 
-// Create context
-const TaskContext = createContext();
-
-// TaskProvider component to wrap the application and provide state and actions
 export const TaskProvider = ({ children }) => {
   const [state, dispatch] = useReducer(taskReducer, initialState);
 
@@ -47,8 +46,5 @@ export const TaskProvider = ({ children }) => {
   );
 };
 
-// Custom hook to consume TaskContext
 export const useTaskContext = () => useContext(TaskContext);
-
-// Export TaskActions for use in components
 export { TaskActions };
