@@ -64,7 +64,7 @@ const Dashboard = () => {
 
         <TaskForm addTask={addTask} updateTask={updateTask} />
 
-        <button className="bg-red-800 text-white px-4 py-2 rounded w-full">
+        <button className="bg-red-600 text-white px-4 py-2 rounded w-full">
   <Link to="/login" className="w-full h-full flex justify-center items-center">
     Logout
   </Link>
