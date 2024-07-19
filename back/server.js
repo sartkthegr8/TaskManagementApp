@@ -1,4 +1,3 @@
-// back/server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -52,39 +51,44 @@ app.post('/login', async (req, res) => {
   }
 });
 
-// Tasks endpoints
-app.post('/tasks', async (req, res) => {
+// Fetch user information
+// app.get('/user', async (req, res) => {
+//   const token = req.headers.authorization?.split(' ')[1]; // Get token from Authorization header
+//   if (!token) {
+//     return res.status(401).json({ error: 'No token provided' });
+//   }
+
+//   try {
+//     const decoded = jwt.verify(token, config.JWT_SECRET);
+//     const user = await User.findById(decoded.userId).select('name'); // Fetch user by ID
+//     if (!user) {
+//       return res.status(404).json({ error: 'User not found' });
+//     }
+//     res.json({ name: user.name });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: 'Server error' });
+//   }
+// });
+
+app.get('/me', async (req, res) => {
+  const token = req.headers['authorization']?.split(' ')[1];
+  if (!token) return res.status(401).json({ error: 'No token provided' });
+
   try {
-    const { title, description, dueDate, status } = req.body;
-    const task = new Task({ title, description, dueDate, status });
-    await task.save();
-    res.status(201).json(task);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Server error' });
+    const decoded = jwt.verify(token, config.JWT_SECRET);
+    const user = await User.findById(decoded.userId);
+    if (!user) return res.status(401).json({ error: 'User not found' });
+
+    res.json({ user: { id: user._id, name: user.name } });
+  } catch (error) {
+    console.error('Token verification error:', error);
+    res.status(401).json({ error: 'Invalid token' });
   }
 });
 
-app.get('/tasks', async (req, res) => {
-  try {
-    const tasks = await Task.find();
-    res.status(200).json(tasks);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Server error' });
-  }
-});
 
-app.delete('/tasks/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    await Task.findByIdAndDelete(id);
-    res.status(200).json({ message: 'Task deleted' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Server error' });
-  }
-});
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
