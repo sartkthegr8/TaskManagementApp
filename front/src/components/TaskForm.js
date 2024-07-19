@@ -1,5 +1,5 @@
+// src/components/TaskForm.js
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useTaskContext, TaskActions } from '../context/TaskContext';
 
 const TaskForm = () => {
@@ -9,21 +9,14 @@ const TaskForm = () => {
   const [status, setStatus] = useState('To-Do');
   const { dispatch } = useTaskContext();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const newTask = { title, description, dueDate, status };
-
-    try {
-      const response = await axios.post('http://localhost:5000/tasks', newTask);
-      console.log('Task added successfully:', response.data);
-      dispatch({ type: TaskActions.ADD_TASK, payload: response.data });
-      setTitle('');
-      setDescription('');
-      setDueDate('');
-      setStatus('To-Do');
-    } catch (error) {
-      console.error('Error adding task:', error.response ? error.response.data : error.message);
-    }
+    dispatch({ type: TaskActions.ADD_TASK, payload: newTask });
+    setTitle('');
+    setDescription('');
+    setDueDate('');
+    setStatus('To-Do');
   };
 
   return (

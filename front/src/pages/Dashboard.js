@@ -1,33 +1,18 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
-import Task from '../components/Task';
-import TaskForm from '../components/TaskForm';
-import { useTaskContext, TaskActions } from '../context/TaskContext';
+// src/pages/Dashboard.js
+import React from 'react';
+import { useAuthContext } from '../context/AuthContext';
 
 const Dashboard = () => {
-  const { state, dispatch } = useTaskContext();
-
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/tasks');
-        dispatch({ type: TaskActions.SET_TASKS, payload: response.data });
-      } catch (error) {
-        console.error('Error fetching tasks:', error);
-      }
-    };
-
-    fetchTasks();
-  }, [dispatch]);
+  const { user, logout } = useAuthContext();
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-4xl bg-white p-8 rounded-lg shadow-md">
-        <h1 className="text-4xl font-bold mb-4">Dashboard</h1>
-        <TaskForm />
-        {state.tasks.map((task) => (
-          <Task key={task._id} task={task} />
-        ))}
+    <div className="flex flex-col items-center min-h-screen bg-gray-100 p-6">
+      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
+        <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
+        <p className="text-gray-700 mb-6">Welcome to your dashboard, {user ? user.name : 'User'}!</p>
+        <button onClick={logout} className="bg-red-500 text-white px-4 py-2 rounded">
+          Logout
+        </button>
       </div>
     </div>
   );

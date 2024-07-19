@@ -1,12 +1,14 @@
 // src/components/TaskList.js
 import React from 'react';
 import Task from './Task';
+import { useTaskContext } from '../context/TaskContext';
 
-const TaskList = ({ tasks, updateTask, deleteTask }) => {
+const TaskList = () => {
+  const { state } = useTaskContext();
   return (
-    <div>
-      {tasks.map(task => (
-        <Task key={task._id} task={task} updateTask={updateTask} deleteTask={deleteTask} />
+    <div className="space-y-4">
+      {state.tasks.map(task => (
+        <Task key={task.id} task={task} />
       ))}
     </div>
   );

@@ -1,36 +1,17 @@
 // src/pages/HomePage.js
-import React, { useState } from 'react';
-import Login from '../components/Login';
-import Signup from '../components/Signup';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
-  const [showLogin, setShowLogin] = useState(true);
-
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
-          Welcome to the Task Management App
-        </h1>
-        <div className="flex justify-center mb-6">
-          <button
-            onClick={() => setShowLogin(true)}
-            className={`mr-2 px-4 py-2 rounded-full focus:outline-none ${
-              showLogin ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-800'
-            }`}
-          >
-            Login
-          </button>
-          <button
-            onClick={() => setShowLogin(false)}
-            className={`px-4 py-2 rounded-full focus:outline-none ${
-              !showLogin ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-800'
-            }`}
-          >
-            Sign Up
-          </button>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="w-full max-w-2xl bg-white p-8 rounded-lg shadow-md text-center">
+        <h1 className="text-4xl font-bold mb-4">Welcome to the Task Management App</h1>
+        <p className="text-gray-700 mb-6">Manage your tasks efficiently and stay organized.</p>
+        <div>
+          <Link to="/signup" className="inline-block bg-indigo-600 text-white py-2 px-4 rounded-md shadow-md hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mr-2">Sign Up</Link>
+          <Link to="/login" className="inline-block bg-gray-600 text-white py-2 px-4 rounded-md shadow-md hover:bg-gray-700 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">Login</Link>
         </div>
-        {showLogin ? <Login /> : <Signup />}
       </div>
     </div>
   );

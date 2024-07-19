@@ -3,8 +3,11 @@ import React from 'react';
 
 const NotFoundPage = () => {
   return (
-    <div>
-      <h2>404 - Page Not Found</h2>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md text-center">
+        <h1 className="text-4xl font-bold mb-4">404</h1>
+        <p className="text-gray-700">Page not found.</p>
+      </div>
     </div>
   );
 };
