@@ -17,10 +17,6 @@ const App = () => {
           <nav className="bg-gray-800 p-4 text-white">
             <div className="container mx-auto flex justify-between items-center">
               <Link to="/" className="text-xl font-bold">Home</Link>
-              <div>
-                {/* <Link to="/signup" className="mx-4">Sign Up</Link>
-                <Link to="/login" className="mx-4">Login</Link> */}
-              </div>
             </div>
           </nav>
           <Routes>
